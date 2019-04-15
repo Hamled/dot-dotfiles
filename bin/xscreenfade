@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+
+# Seconds
+FADE_TIME = ARGV.empty? ? 10 : ARGV.first.to_i
+
+STEPS = 50
+STEP_TIME = (FADE_TIME / STEPS.to_f)
+
+def idle; `xprintidle`.to_i; end
+def idle?
+  # If our latest idle time is less than
+  # previously, we're no longer idle
+  @prev_idle ||= idle
+  new_idle = idle
+  if @prev_idle <= new_idle
+    @prev_idle = new_idle
+    return true
+  end
+
+  false
+end
+
+def reset_screen
+  `xcalib -clear`
+end
+
+def adjust_screen
+  `xcalib -co 95 -a`
+end
+
+def fade_screen
+  sleep(0.1)
+
+  fade_start = Time.now
+
+  STEPS.times do |i|
+    step_end = fade_start + (i+1) * STEP_TIME
+
+    exit(1) unless idle?
+
+    adjust_screen
+
+    sleep_time = step_end - Time.now
+    sleep(sleep_time) if sleep_time > 0
+  end
+
+  exit(0)
+end
+
+at_exit { reset_screen }
+fade_screen
