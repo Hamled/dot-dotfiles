@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+APP="$(which -a "$(basename "$0")" | sed "0,\|^$0\$|d" | head -n 1)"
+if [[ -e "$APP" ]]; then
+  GDK_DPI_SCALE=0.5
+  $APP ${@}
+else
+  echo "$(basename "$0") could not be found"
+fi
