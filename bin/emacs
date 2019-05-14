@@ -13,13 +13,23 @@ function run_client() {
   local CLIENT="$(which -a "$CLIENT_NAME" | head -n 1)"
   [[ ! -e "$CLIENT" ]] && echo "$CLIENT_NAME could not be found" && exit 1
 
-  # If we're running in terminal mode actually wait
-  local WAIT_ARG="-n"
+  # Figure out if we should wait
+  local WAIT_ARG="-n" # Default to not waiting
+  local ARGS=()
   for ARG in "${@}"; do
+    shift
+
+    # If we've requested waiting
+    # don't include the argument, since emacs doesn't know it
+    [[ $ARG == "--wait" ]] && WAIT_ARG="" && continue
+
+    # If we're running in terminal mode actually wait
     [[ $ARG == "-t" || $ARG == "--tty" || $ARG == "-nw" ]] && WAIT_ARG=""
+
+    ARGS+=("$ARG")
   done
 
-  exec $CLIENT -a="" -c $WAIT_ARG ${@}
+  exec $CLIENT -a="" -c $WAIT_ARG ${ARGS[@]}
 }
 
 # If we're trying to start server, do so
