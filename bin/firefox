@@ -5,7 +5,7 @@ function run() {
     local APP="$(which -a "$APP_NAME" | sed "0,\|^$0\$|d" | head -n 1)"
     [[ ! -e "$APP" ]] && echo "$APP_NAME could not be found" && exit 1
 
-    GDK_DPI_SCALE=0.5
+    export GDK_DPI_SCALE=0.5
     exec $APP ${@}
 }
 
