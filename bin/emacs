@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+function run_server() {
+  local SERVER_NAME=emacs
+  local SERVER="$(which -a "$SERVER_NAME" | sed "0,\|^$0\$|d" | head -n 1)"
+
+  if [[ -e "$SERVER" ]]; then
+    $SERVER ${@}
+  else
+    echo "$SERVER_NAME could not be found"
+  fi
+}
+
+function run_client() {
+  local CLIENT_NAME=emacsclient
+  local CLIENT="$(which -a "$CLIENT_NAME" | head -n 1)"
+
+  if [[ ! -e "$CLIENT" ]]; then
+    echo "$CLIENT_NAME could not be found"
+    exit 1
+  fi
+
+  # If we're running in terminal mode actually wait
+  local WAIT_ARG="-n"
+  for ARG in "${@}"; do
+    [[ $ARG == "-t" || $ARG == "--tty" || $ARG == "-nw" ]] && WAIT_ARG=""
+  done
+
+  $CLIENT -a="" -c $WAIT_ARG ${@}
+}
+
+# If we're trying to start server, do so
+for ARG in "${@}"; do
+  if [[ "$ARG" == *"daemon" ]]; then
+    run_server ${@}
+    exit $?
+  fi
+done
+
+run_client ${@}
