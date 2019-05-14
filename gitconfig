@@ -1,5 +1,4 @@
 [core]
-	editor = vim -f
 	excludesfile = /Users/charles/.gitignore_global
 [user]
 	name = Charles Ellis
