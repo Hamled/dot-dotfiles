@@ -1,0 +1,5 @@
+alias ls='ls --color=auto'
+
+alias :e='vi'
+alias vi='vim'
+alias vim='nvim'
