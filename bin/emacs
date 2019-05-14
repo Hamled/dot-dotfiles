@@ -3,22 +3,15 @@
 function run_server() {
   local SERVER_NAME=emacs
   local SERVER="$(which -a "$SERVER_NAME" | sed "0,\|^$0\$|d" | head -n 1)"
+  [[ ! -e "$SERVER" ]] && echo "$SERVER_NAME could not be found" && exit 1
 
-  if [[ -e "$SERVER" ]]; then
-    $SERVER ${@}
-  else
-    echo "$SERVER_NAME could not be found"
-  fi
+  exec $SERVER ${@}
 }
 
 function run_client() {
   local CLIENT_NAME=emacsclient
   local CLIENT="$(which -a "$CLIENT_NAME" | head -n 1)"
-
-  if [[ ! -e "$CLIENT" ]]; then
-    echo "$CLIENT_NAME could not be found"
-    exit 1
-  fi
+  [[ ! -e "$CLIENT" ]] && echo "$CLIENT_NAME could not be found" && exit 1
 
   # If we're running in terminal mode actually wait
   local WAIT_ARG="-n"
@@ -26,15 +19,12 @@ function run_client() {
     [[ $ARG == "-t" || $ARG == "--tty" || $ARG == "-nw" ]] && WAIT_ARG=""
   done
 
-  $CLIENT -a="" -c $WAIT_ARG ${@}
+  exec $CLIENT -a="" -c $WAIT_ARG ${@}
 }
 
 # If we're trying to start server, do so
 for ARG in "${@}"; do
-  if [[ "$ARG" == *"daemon" ]]; then
-    run_server ${@}
-    exit $?
-  fi
+  [[ "$ARG" == *"daemon" ]] && run_server ${@}
 done
 
 run_client ${@}

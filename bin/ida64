@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
-APP="$(which -a "$(basename "$0")" | sed "0,\|^$0\$|d" | head -n 1)"
-if [[ -e "$APP" ]]; then
-  QT_AUTO_SCREEN_SCALE_FACTOR=1 $APP ${@}
-else
-  echo "$(basename "$0") could not be found"
-fi
+
+function run() {
+    local APP_NAME="$(basename "$0")"
+    local APP="$(which -a "$APP_NAME" | sed "0,\|^$0\$|d" | head -n 1)"
+    [[ ! -e "$APP" ]] && echo "$APP_NAME could not be found" && exit 1
+
+    QT_AUTO_SCREEN_SCALE_FACTOR=1
+    exec $APP ${@}
+}
+
+run
