@@ -10,6 +10,8 @@ export EDITOR="emacs -t"
 export VISUAL="emacs --wait"
 export TERMINAL=termite
 
+export HISTCONTROL=ignoreboth
+
 export GDK_SCALE=2
 
 # Connect Gnome keyring
