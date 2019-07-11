@@ -321,7 +321,8 @@ you should place your code here."
   (defun racket-repl-mode-keys ()
     "custom keybindings for racket-repl-mode"
     (local-set-key (kbd "<C-return>") 'newline-and-indent))
-  (add-hook 'racket-repl-mode-hook 'racket-repl-mode-keys))
+  (add-hook 'racket-repl-mode-hook 'racket-repl-mode-keys)
+  (set-fontset-font t 'unicode "Symbola" nil 'prepend))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
