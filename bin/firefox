@@ -1,12 +1,1 @@
-#!/usr/bin/env bash
-
-function run() {
-    local APP_NAME="$(basename "$0")"
-    local APP="$(which -a "$APP_NAME" | sed "0,\|^$0\$|d" | head -n 1)"
-    [[ ! -e "$APP" ]] && echo "$APP_NAME could not be found" && exit 1
-
-    export GDK_DPI_SCALE=0.5
-    exec $APP ${@}
-}
-
-run
+.wrapper_hidpi_gdk.sh

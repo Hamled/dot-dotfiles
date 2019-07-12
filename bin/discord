@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
+# shellcheck source=.find_app.sh
+. "$(dirname "$0")/.find_app.sh"
+
 function run() {
-    local APP_NAME="$(basename "$0")"
-    local APP="$(which -a "$APP_NAME" | sed "0,\|^$0\$|d" | head -n 1)"
-    [[ ! -e "$APP" ]] && echo "$APP_NAME could not be found" && exit 1
+    find_app
 
     export GDK_DPI_SCALE=0.35
-    exec $APP ${@}
+    exec "$APP" "${@}"
 }
 
-run
+run "${@}"

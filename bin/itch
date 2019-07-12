@@ -1,12 +1,1 @@
-#!/usr/bin/env bash
-
-function run() {
-    local APP_NAME="itch-setup"
-    local APP="$(which -a "$APP_NAME" | head -n 1)"
-    [[ ! -e "$APP" ]] && echo "$APP_NAME could not be found" && exit 1
-
-    export GDK_DPI_SCALE=0.5
-    exec $APP --prefer-launch -- --force-device-scale-factor=2 ${@}
-}
-
-run
+.wrapper_hidpi_gdk.sh

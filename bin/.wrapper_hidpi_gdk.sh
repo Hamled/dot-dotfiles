@@ -6,7 +6,8 @@
 function run() {
     find_app
 
-    exec "$APP" --force-device-scale-factor=2 "${@}"
+    export GDK_DPI_SCALE=0.5
+    exec "$APP" "${@}"
 }
 
 run "${@}"

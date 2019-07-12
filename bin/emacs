@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
 
+# Don't warn about using which (because we need which -a)
+# shellcheck disable=SC2230
+
 function run_server() {
   local SERVER_NAME=emacs
-  local SERVER="$(which -a "$SERVER_NAME" | sed "0,\|^$0\$|d" | head -n 1)"
+  local SERVER
+  SERVER="$(which -a "$SERVER_NAME" | sed "0,\|^$0\$|d" | head -n 1)"
   [[ ! -e "$SERVER" ]] && echo "$SERVER_NAME could not be found" && exit 1
 
-  exec $SERVER ${@}
+  exec "$SERVER" "${@}"
 }
 
 function run_client() {
   local CLIENT_NAME=emacsclient
-  local CLIENT="$(which -a "$CLIENT_NAME" | head -n 1)"
+  local CLIENT
+  CLIENT="$(which -a "$CLIENT_NAME" | head -n 1)"
   [[ ! -e "$CLIENT" ]] && echo "$CLIENT_NAME could not be found" && exit 1
 
   # Figure out if we should wait
@@ -29,12 +34,12 @@ function run_client() {
     ARGS+=("$ARG")
   done
 
-  exec $CLIENT -a="" -c $WAIT_ARG ${ARGS[@]}
+  exec "$CLIENT" -a="" -c $WAIT_ARG "${ARGS[@]}"
 }
 
 # If we're trying to start server, do so
 for ARG in "${@}"; do
-  [[ "$ARG" == *"daemon" ]] && run_server ${@}
+  [[ "$ARG" == *"daemon" ]] && run_server "${@}"
 done
 
-run_client ${@}
+run_client "${@}"
