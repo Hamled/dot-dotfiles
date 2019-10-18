@@ -327,7 +327,11 @@ you should place your code here."
   (set-fontset-font t 'unicode "Symbola" nil 'prepend)
 
   (setq eclim-eclipse-dirs "/usr/lib/eclipse"
-        eclim-executable "/usr/lib/eclipse/eclim"))
+        eclim-executable "/usr/lib/eclipse/eclim")
+
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 2)
+  (setq-default standard-indent 2))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
