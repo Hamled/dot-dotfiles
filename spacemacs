@@ -40,16 +40,19 @@ This function should only modify configuration layer settings."
      csv
      markdown
      helm
+     lsp
      auto-completion
      ;; better-defaults
      emacs-lisp
      git
+     multiple-cursors
      ;; org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;; spell-checking
      ;; syntax-checking
+     treemacs
      ;; version-control
      racket
      latex
