@@ -331,7 +331,10 @@ you should place your code here."
 
   (setq-default indent-tabs-mode nil)
   (setq-default tab-width 2)
-  (setq-default standard-indent 2))
+  (setq-default standard-indent 2)
+
+  (setq-default js-indent-level 2)
+  (setq-default typescript-indent-level 2))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
