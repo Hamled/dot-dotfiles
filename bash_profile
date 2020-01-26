@@ -2,6 +2,11 @@
 # ~/.bash_profile
 #
 
+export PATH=$PATH:`yarn global bin`
+export PATH=$PATH:~/.cargo/bin
+
+export PATH=~/.ellipsis/bin:$PATH
+
 if [[ -d ~/bin ]]; then
   export PATH=~/bin:$PATH
 fi
