@@ -490,6 +490,8 @@ before packages are loaded."
   (add-hook 'c-mode-hook 'c-mode-indent)
   (add-hook 'c++-mode-hook 'c-mode-indent)
 
+  (add-to-list 'auto-mode-alist '("\\.bfg\\'" . python-mode))
+
   (setq-default indent-tabs-mode nil)
   (setq-default tab-width 2)
   (setq-default standard-indent 2)
