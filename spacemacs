@@ -485,6 +485,11 @@ before packages are loaded."
   (setq eclim-eclipse-dirs "/usr/lib/eclipse"
         eclim-executable "/usr/lib/eclipse/eclim")
 
+  (defun c-mode-indent ()
+    (c-set-offset 'inlambda 0))
+  (add-hook 'c-mode-hook 'c-mode-indent)
+  (add-hook 'c++-mode-hook 'c-mode-indent)
+
   (setq-default indent-tabs-mode nil)
   (setq-default tab-width 2)
   (setq-default standard-indent 2)
