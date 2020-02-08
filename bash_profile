@@ -11,8 +11,8 @@ if [[ -d ~/bin ]]; then
   export PATH=~/bin:$PATH
 fi
 
-export EDITOR="emacs -t"
-export VISUAL="emacs --wait"
+export EDITOR="ema -t"
+export VISUAL="ema --wait"
 export TERMINAL=termite
 
 export HISTCONTROL=ignoreboth
