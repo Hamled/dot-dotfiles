@@ -34,7 +34,14 @@ function run_client() {
     ARGS+=("$ARG")
   done
 
-  exec "$CLIENT" -a="" -c $WAIT_ARG "${ARGS[@]}"
+  # Try to use an existing Emacs frame in the current workspace
+  local CREATE_ARG="-c"
+  if i3-msg "[workspace=__focused__ class=Emacs] focus" >/dev/null 2>&1; then
+    CREATE_ARG="" # Don't need to create a new frame
+  fi
+
+  export GDK_DPI_SCALE=0.5
+  exec "$CLIENT" -a="" $CREATE_ARG $WAIT_ARG "${ARGS[@]}"
 }
 
 # If we're trying to start server, do so
